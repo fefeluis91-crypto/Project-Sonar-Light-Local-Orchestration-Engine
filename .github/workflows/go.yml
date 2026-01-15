@@ -1,0 +1,33 @@
+name: Continuos Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+    - name: Inicia banco
+      run: docker compose up -d postgres
+
+    - name: Lint
+     
+      run: |
+        echo "🔍 Iniciando a verificação de estilo (Lint)..."
+        docker run --rm -v .:/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/ || (echo "❌ ERRO: Seu código está bagunçado!" && exit 1)
+        echo "✅ SUCESSO: Código limpo!"
+
+    - name: Test
+      run: |
+        docker compose exec -T app go test ./... || (echo "❌ ERRO: O teste falhou!" && exit 1)
+        echo "✅ SUCESSO: Deu tudo certo!""
