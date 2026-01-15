@@ -16,3 +16,9 @@ aviso:
 	@echo "Deu tudo certo!"
 
 ci: start lint test clean aviso
+
+push-seguro: lint test
+	@git add .
+	@git commit -m "$(m)"
+	@git push origin main
+	@echo "🚀 ✅ SUCESSO: Tudo testado e enviado com a mensagem: '$(m)'"
