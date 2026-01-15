@@ -17,7 +17,7 @@ aviso:
 
 ci: start lint test clean aviso
 
-push-seguro: lint test
+push-seguro: ci
 	@git add .
 	@git commit -m "$(m)"
 	@git push origin main
