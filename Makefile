@@ -1,10 +1,18 @@
-.PHONY: lint
+l.PHONY: lint
 
 lint:
-	docker run --rm -itv $(CURDIR):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
+	@echo "🔍 Iniciando a verificação de estilo (Lint)..."
+	@docker run --rm -v $(CURDIR):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/ > /dev/null 2>&1 || (echo "❌ ERRO: Seu código está bagunçado! Rode o lint localmente para ver os erros." && exit 1)
+	@echo "✅ SUCESSO: Código limpo e padronizado! Deu tudo certo."
 test:
-	docker compose exec app go test ./...
+	@docker compose exec app go test ./... > /dev/null 2>&1 || (echo "❌ ERRO: O teste falhou!" && exit 1)
+	@echo "✅ SUCESSO: Deu tudo certo!"
 start:
 	docker compose up -d
+clean:
+	clear
+aviso:
+	@echo "--- O TESTE PASSOU! DEU TUDO CERTO! ---"
+	@echo "Deu tudo certo!"
 
-ci: start lint test
+ci: start lint test clean aviso
