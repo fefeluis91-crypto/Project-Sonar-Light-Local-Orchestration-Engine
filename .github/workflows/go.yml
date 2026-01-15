@@ -17,17 +17,20 @@ jobs:
       with:
         go-version: '1.22'
 
-    - name: Inicia banco
-      run: docker compose up -d postgres
+    - name: Inicia Ambiente
+      # Aqui subimos TUDO (App e Postgres) e esperamos um pouco
+      run: |
+        docker compose up -d
+        sleep 15
 
     - name: Lint
-     
       run: |
-        echo "🔍 Iniciando a verificação de estilo (Lint)..."
+        echo "🔍 Iniciando a verificação de estilo..."
         docker run --rm -v .:/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/ || (echo "❌ ERRO: Seu código está bagunçado!" && exit 1)
         echo "✅ SUCESSO: Código limpo!"
 
     - name: Test
       run: |
+        # O comando abaixo agora vai funcionar porque o 'app' estará rodando
         docker compose exec -T app go test ./... || (echo "❌ ERRO: O teste falhou!" && exit 1)
-        echo "✅ SUCESSO: Deu tudo certo!""
+        echo "✅ SUCESSO: Deu tudo certo!"

@@ -20,5 +20,5 @@ ci: start lint test clean aviso
 push-seguro: ci
 	@git add .
 	@git commit -m "$(m)"
-	@git push origin main
-	@echo "🚀 ✅ SUCESSO: Tudo testado e enviado com a mensagem: '$(m)'"
+	@git push origin HEAD
+	@echo "🚀 ✅ SUCESSO: Tudo enviado! Agora vá ao GitHub abrir o PR."
