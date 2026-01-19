@@ -49,6 +49,7 @@ Para agilizar o desenvolvimento local, criei comandos personalizados que automat
 
 ## 💡 Como rodar localmente
 
+
 1.  Clone o repositório.
 2.  Certifique-se de ter o Docker instalado.
 3.  Use o comando abaixo para subir suas alterações com segurança:
