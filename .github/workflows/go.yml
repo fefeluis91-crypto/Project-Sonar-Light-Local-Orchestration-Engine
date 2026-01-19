@@ -34,3 +34,12 @@ jobs:
         # O comando abaixo agora vai funcionar porque o 'app' estará rodando
         docker compose exec -T app go test ./... || (echo "❌ ERRO: O teste falhou!" && exit 1)
         echo "✅ SUCESSO: Deu tudo certo!"
+
+    - name: Build
+      run: go build main.go
+
+    - name: Projeto compilado
+      uses: actions/upload-artifact@v4
+      with:
+        name: projeto_compilado
+        path: main
