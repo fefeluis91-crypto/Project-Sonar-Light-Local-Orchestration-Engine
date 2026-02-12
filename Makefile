@@ -22,3 +22,13 @@ push-seguro: ci
 	@git commit -m "$(m)"
 	@git push origin HEAD
 	@echo "🚀 ✅ SUCESSO: Tudo enviado! Agora vá ao GitHub abrir o PR."
+
+sys-check:
+	@echo "🖥️  Monitorando recursos do sistema (Hardware Level)..."
+	@echo "---"
+	@echo "🕒 Uptime do Sistema:" && uptime
+	@echo "💾 Uso de Memória Real:" && free -h
+	@echo "📂 I/O de Disco (Onde os elétrons moram):" && df -h .
+	@echo "---"
+
+ci: sys-check start lint test clean aviso
